@@ -11,10 +11,10 @@
 <style>
 body {
     margin: 0;
-    overflow: hidden;
+    overflow-x: hidden;
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(to top, #1e1b4b, #4c1d95, #f59e0b);
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,10 +24,10 @@ body {
 
 /* Pantalla inicial */
 .overlay {
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.7);
+    background: rgba(0,0,0,0.75);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -40,6 +40,7 @@ body {
 .overlay h1 {
     font-family: 'Great Vibes', cursive;
     font-size: 4rem;
+    margin: 0;
 }
 
 /* Contenido */
@@ -47,6 +48,18 @@ body {
     opacity: 0;
     transition: 2s;
     max-width: 700px;
+    padding: 30px;
+}
+
+.content h2 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3rem;
+}
+
+.content p {
+    font-size: 1rem;
+    line-height: 1.6;
+    white-space: pre-line;
 }
 
 /* Botones */
@@ -83,7 +96,7 @@ button {
 
 /* Linternas */
 .lantern {
-    position: absolute;
+    position: fixed;
     width: 20px;
     height: 30px;
     background: radial-gradient(circle, #ffd700 0%, #ff8c00 70%);
@@ -100,7 +113,7 @@ button {
 
 /* Corazones */
 .heart {
-    position: absolute;
+    position: fixed;
     font-size: 20px;
     animation: rise 3s ease-out forwards;
 }
@@ -108,6 +121,36 @@ button {
 @keyframes rise {
     0% { transform: translateY(0); opacity: 1; }
     100% { transform: translateY(-150px); opacity: 0; }
+}
+
+/* RESPONSIVE CELULAR */
+@media (max-width: 600px) {
+
+    .content {
+        padding: 20px;
+        max-width: 95%;
+    }
+
+    .content h2 {
+        font-size: 2rem;
+    }
+
+    .content p {
+        font-size: 0.9rem;
+    }
+
+    .content h3 {
+        font-size: 1rem;
+    }
+
+    button {
+        padding: 8px 18px;
+        font-size: 0.9rem;
+    }
+
+    .buttons {
+        height: 90px;
+    }
 }
 </style>
 </head>
@@ -120,12 +163,10 @@ button {
 </div>
 
 <div class="content">
-    <h2 style="font-family: 'Great Vibes'; font-size:3rem;">
-        Espero te guste...
-    </h2>
+    <h2>Espero te guste...</h2>
 
     <p>
-        Perdona, mi amor, si mi manera de amar genera inquietud en tu pensar, pero hay algo en todo lo tuyo que a mi corazón no deja de abrazar. No sé si es tu risa, tu historia o incluso tus silencios, pero todo en ti me llama, incluso aquello que guardas en tus adentros.
+Perdona, mi amor, si mi manera de amar genera inquietud en tu pensar, pero hay algo en todo lo tuyo que a mi corazón no deja de abrazar. No sé si es tu risa, tu historia o incluso tus silencios, pero todo en ti me llama, incluso aquello que guardas en tus adentros.
 
 Dime todas las cosas terribles que has hecho y déjame amarte de todos modos, cuéntame tus miedos, tus errores, tus sombras y tus enojos. No quiero una versión perfecta ni una historia maquillada, quiero la verdad completa, incluso la parte que más te pesa y te asusta.
 
@@ -136,6 +177,7 @@ más me nazca cuidarte… y más fuerte mi amor por ti palpite.
 
 Con mucho cariño,
 Sebastian 💛
+    </p>
 
     <h3 style="margin-top:40px;">
         ¿Podrías hacerme el favor de ponerte hermosa mañana a las 2:30 PM aprox? ✨
@@ -146,7 +188,7 @@ Sebastian 💛
         <button class="no" id="noBtn" onclick="moveButton()">No 😅</button>
     </div>
 
-    <p id="response" style="margin-top:20px; font-size:1.3rem;"></p>
+    <p id="response" style="margin-top:20px; font-size:1.2rem;"></p>
 </div>
 
 <audio id="music" loop>
@@ -164,7 +206,7 @@ let yesTexts = [
     "Ándaleee 😭",
     "No seas así 💔",
     "Solo di que sí 😌",
-    "CRJ 🥺",
+    "Ya sabes que quieres 😏",
     "Es el destino ✨"
 ];
 
@@ -192,18 +234,15 @@ function moveButton() {
 
     attempts++;
 
-    // Cambiar texto del SI cuando presionan NO
     if (attempts < yesTexts.length) {
         yesBtn.innerHTML = yesTexts[attempts];
         yesBtn.style.transform = `scale(${1 + attempts * 0.07})`;
     }
 
-    // Mover botón NO después del clic
-    let x = Math.random() * 300 - 150;
-    let y = Math.random() * 200 - 100;
+    let x = Math.random() * 250 - 125;
+    let y = Math.random() * 150 - 75;
     noBtn.style.transform = `translate(${x}px, ${y}px)`;
 
-    // Después desaparece
     if (attempts >= 7) {
         noBtn.style.display = "none";
         yesBtn.innerHTML = "Está bien… di que sí 💜✨";
